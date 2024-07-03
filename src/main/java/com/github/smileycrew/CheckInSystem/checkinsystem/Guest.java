@@ -1,12 +1,10 @@
 package com.github.smileycrew.CheckInSystem.checkinsystem;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 import java.time.LocalDateTime;
 
-// @Data
 @Document(collection = "guests")
 public class Guest {
     @Id
@@ -14,17 +12,13 @@ public class Guest {
     private String email;
     private String fullName;
     private String phoneNumber;
-    // @CreatedDate
-    // private LocalDateTime scheduledAt;
-
-    // private void setScheduledAt(LocalDateTime scheduledAt) {
-    //     this.scheduledAt = LocalDateTime.now();
-    // }
+    private LocalDateTime scheduledAt;
 
     public Guest(String email, String fullName, String phoneNumber) {
         this.email = email;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
+        this.scheduledAt = LocalDateTime.now();
     }
 
     public String getId() {
@@ -57,5 +51,13 @@ public class Guest {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDateTime getScheduledAt() {
+        return scheduledAt;
+    }
+
+    public void setScheduledAt() {
+        this.scheduledAt = LocalDateTime.now();
     }
 }

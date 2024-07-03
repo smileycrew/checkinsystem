@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Service
 public class GuestService {
@@ -31,7 +33,9 @@ public class GuestService {
     }
     
     public List<Guest> getGuests() {
-        List<Guest> guests = guestRepository.findAll();
+        LocalDate today = LocalDate.now();
+        
+        List<Guest> guests = guestRepository.findAll().stream().filter((guest) -> guest.getScheduledAt().toLocalDate().equals(today)).collect(Collectors.toList());
         
         return guests;
     }
