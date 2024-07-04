@@ -2,7 +2,6 @@ package com.github.smileycrew.CheckInSystem.checkinsystem;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +33,12 @@ public class GuestService {
     
     public List<Guest> getGuests() {
         LocalDate today = LocalDate.now();
+
+        List<Guest> allGuests = guestRepository.findAll();
         
-        List<Guest> guests = guestRepository.findAll().stream().filter((guest) -> guest.getScheduledAt().toLocalDate().equals(today)).collect(Collectors.toList());
+        List<Guest> todaysGuests = allGuests.stream().filter((guest) -> guest.getScheduledAt().toLocalDate().equals(today)).collect(Collectors.toList());
+
+        List<Guest> guests = todaysGuests.stream().filter((guest) -> !guest.getIsExpired()).collect(Collectors.toList());
         
         return guests;
     }

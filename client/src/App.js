@@ -1,8 +1,8 @@
 import './App.css'
 import { useEffect, useState } from "react"
-import Input from './components/Input'
-import Button from './components/Button'
 import Form from './components/Form'
+import GuestList from './components/GuestList'
+import Button from './components/Button'
 
 const _api = "http://localhost:8080/api/guests"
 
@@ -96,9 +96,10 @@ function App() {
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center max-h-screen min-h-screen p-10 w-screen">
+    <div className="flex flex-col gap-3 items-center justify-center max-h-screen min-h-screen p-10 w-screen">
       <h1 className='text-2xl'>Welcome to check in system!</h1>
       <p>This app is used to check in and save your spot to an imaginary company that does not exist! <span className='italic'>Think of checking in when getting a hair cut.</span></p>
+
       <Form
         acceptEmail={acceptEmail}
         email={email}
@@ -112,25 +113,19 @@ function App() {
         phoneNumber={phoneNumber}
       />
 
-      <p>Appointments scheduled for today.</p>
+      {guests.length === 0 && (
+        <p>There are no appointments scheduled at this time.</p>
+      )}
 
-      <div></div>
+      {guests.length > 0 && (
+        <>
+          <p>Appointments scheduled for today.</p>
 
-
-      <ul className='flex flex-col gap-3 overflow-scroll text-center'>
-        <li className='grid grid-cols-3'>
-          <p>No.</p>
-          <p>Guest</p>
-          <p>Verified</p>
-        </li>
-        {guests.map((guest, index) => (
-          <li className='border-b grid grid-cols-3' key={guest.id}>
-            <p>{index + 1}.</p>
-            <p>{guest.fullName}</p>
-            <p>✅</p>
-          </li>
-        ))}
-      </ul>
+          <div className='flex flex-col gap-3 overflow-scroll w-[300px]'>
+            <GuestList guests={guests} />
+          </div>
+        </>
+      )}
     </div>
   )
 }

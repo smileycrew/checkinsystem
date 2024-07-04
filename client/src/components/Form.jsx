@@ -14,8 +14,9 @@ export default function Form({
   phoneNumber,
 }) {
   return (
-    <form className="border flex flex-col gap-3 items-center p-3 rounded w-[500px]">
+    <form className="border flex flex-col gap-3 items-center p-3 rounded shadow-sm w-[500px]">
       <p>Online check in</p>
+
       <Input
         onChange={handleSetEmail}
         placeholder="Enter your email"

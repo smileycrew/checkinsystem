@@ -2,6 +2,7 @@ package com.github.smileycrew.CheckInSystem.checkinsystem;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.Duration;
 import org.springframework.data.annotation.Id;
 import java.time.LocalDateTime;
 
@@ -25,36 +26,46 @@ public class Guest {
         return id;
     }
 
-    public void setId(ObjectId id) {
-        this.id = id.toHexString();
+    public Boolean getIsExpired() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration duration = Duration.between(scheduledAt, now);
+        
+        Boolean isExpired = duration.toHours() >= 1;
+
+        return isExpired;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFullName() {
         return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public LocalDateTime getScheduledAt() {
         return scheduledAt;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id.toHexString();
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setScheduledAt() {
