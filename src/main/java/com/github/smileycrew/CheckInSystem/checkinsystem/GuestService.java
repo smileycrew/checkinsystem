@@ -53,7 +53,7 @@ public class GuestService {
     public Boolean hasGuestCheckedIn(String email) {
         List<Guest> guests = getGuests();
 
-        List<Guest> guestsWithMatchingEmail = guests.stream().filter((guest) -> guest.getEmail().equals(email.toString())).collect(Collectors.toList());
+        List<Guest> guestsWithMatchingEmail = guests.stream().filter((guest) -> guest.getEmail().equals(email.toLowerCase().toString())).collect(Collectors.toList());
 
         return !guestsWithMatchingEmail.isEmpty();
     }

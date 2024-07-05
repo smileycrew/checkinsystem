@@ -16,7 +16,7 @@ public class Guest {
     private String phoneNumber;
 
     public Guest(String email, String fullName, String phoneNumber) {
-        this.email = email;
+        this.email = email.toLowerCase();
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.checkedInAt = LocalDateTime.now();
@@ -34,7 +34,7 @@ public class Guest {
         return isExpired;
     }
 
-    public String getEmail() { return email; }
+    public String getEmail() { return email.toLowerCase(); }
 
     public String getFullName() { return fullName; }
 
@@ -44,7 +44,7 @@ public class Guest {
 
     public void setId(ObjectId id) { this.id = id.toHexString(); }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email.toLowerCase(); }
 
     public void setFullName(String fullName) { this.fullName = fullName; }
 
