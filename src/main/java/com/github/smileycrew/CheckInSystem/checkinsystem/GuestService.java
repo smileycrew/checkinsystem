@@ -13,18 +13,17 @@ public class GuestService {
     @Autowired
     private GuestRepository guestRepository;
 
-    public Guest addGuest(Guest newGuest) throws Exception {
-        String email = newGuest.getEmail();
+    public Guest addGuest(Guest newGuestData) throws Exception {
+        String email = newGuestData.getEmail();
 
-        List<Guest> allGuests = getGuests();
-        Boolean verifiedGuests = doesGuestExists(email, allGuests);
+        Boolean isGuestCheckedIn = hasGuestCheckedIn(email);
 
-        if (verifiedGuests) {
+        if (isGuestCheckedIn) {
             throw new Exception();
         }
         
-        String fullName = newGuest.getFullName();
-        String phoneNumber = newGuest.getPhoneNumber();
+        String fullName = newGuestData.getFullName();
+        String phoneNumber = newGuestData.getPhoneNumber();
 
         Guest guest = new Guest(email, fullName, phoneNumber);
 
@@ -32,7 +31,7 @@ public class GuestService {
 
         return guest;
     }
-
+    // this service is unused
     public Optional<Guest> getGuest(ObjectId id) {
         Optional<Guest> guest = guestRepository.findById(id);
 
@@ -44,24 +43,21 @@ public class GuestService {
 
         List<Guest> allGuests = guestRepository.findAll();
         
-        List<Guest> todaysGuests = allGuests.stream().filter((guest) -> guest.getScheduledAt().toLocalDate().equals(today)).collect(Collectors.toList());
+        List<Guest> todaysGuests = allGuests.stream().filter((guest) -> guest.getCheckedInAt().toLocalDate().equals(today)).collect(Collectors.toList());
 
         List<Guest> guests = todaysGuests.stream().filter((guest) -> !guest.getIsExpired()).collect(Collectors.toList());
         
         return guests;
     }
-
-    public Boolean doesGuestExists(String email, List<Guest> guests) {
-        List<Guest> verifiedGuests = guests.stream().filter((guest) -> guest.getEmail().equals(email.toString())).collect(Collectors.toList());
-
-        if (verifiedGuests.isEmpty()) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
     
+    public Boolean hasGuestCheckedIn(String email) {
+        List<Guest> guests = getGuests();
+
+        List<Guest> guestsWithMatchingEmail = guests.stream().filter((guest) -> guest.getEmail().equals(email.toString())).collect(Collectors.toList());
+
+        return !guestsWithMatchingEmail.isEmpty();
+    }
+    // unused dservice
     public Guest updateGuest(String guestId, Guest updatedGuestData) {
         ObjectId id = new ObjectId(guestId);
 
