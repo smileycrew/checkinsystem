@@ -23,12 +23,17 @@ public class GuestController {
 
     @PostMapping
     public ResponseEntity<Guest> create(@RequestBody Guest newGuestData) {
-        Guest guest = guestService.addGuest(newGuestData);
+        try {
+            Guest guest = guestService.addGuest(newGuestData);
+            
+            return new ResponseEntity<Guest>(guest, HttpStatus.CREATED);
+        }
+        catch (Exception ex) {
+            System.out.println("Guest already exists.");
 
-        return new ResponseEntity<Guest>(guest, HttpStatus.CREATED);
-
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         // TODO: this simple compared to how i have it now
-
         // return ResponseEntity.created(location).body(guest);
     }
 

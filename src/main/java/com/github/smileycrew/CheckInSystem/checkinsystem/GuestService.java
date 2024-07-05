@@ -13,8 +13,16 @@ public class GuestService {
     @Autowired
     private GuestRepository guestRepository;
 
-    public Guest addGuest(Guest newGuest) {
+    public Guest addGuest(Guest newGuest) throws Exception {
         String email = newGuest.getEmail();
+
+        List<Guest> allGuests = getGuests();
+        Boolean verifiedGuests = doesGuestExists(email, allGuests);
+
+        if (verifiedGuests) {
+            throw new Exception();
+        }
+        
         String fullName = newGuest.getFullName();
         String phoneNumber = newGuest.getPhoneNumber();
 
@@ -41,6 +49,17 @@ public class GuestService {
         List<Guest> guests = todaysGuests.stream().filter((guest) -> !guest.getIsExpired()).collect(Collectors.toList());
         
         return guests;
+    }
+
+    public Boolean doesGuestExists(String email, List<Guest> guests) {
+        List<Guest> verifiedGuests = guests.stream().filter((guest) -> guest.getEmail().equals(email.toString())).collect(Collectors.toList());
+
+        if (verifiedGuests.isEmpty()) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     
     public Guest updateGuest(String guestId, Guest updatedGuestData) {
