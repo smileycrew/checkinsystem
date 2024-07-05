@@ -37,7 +37,7 @@ export default function Form({
         value={phoneNumber}
       />
 
-      <div className="grid grid-cols-[1fr,4fr] items-center">
+      {/* <div className="grid grid-cols-[1fr,4fr] items-center">
         <Input
           checked={acceptEmail}
           onChange={handleAcceptEmail}
@@ -46,7 +46,7 @@ export default function Form({
         />
 
         <p>You will receive an email confirmation of your place in line.</p>
-      </div>
+      </div> */}
 
       <div className="flex items-center justify-around w-full">
         <small>Powered by Edwin</small>

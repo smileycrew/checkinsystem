@@ -1,8 +1,6 @@
-import './App.css'
 import { useEffect, useState } from "react"
 import Form from './components/Form'
 import GuestList from './components/GuestList'
-import Button from './components/Button'
 
 const _api = "http://localhost:8080/api/guests"
 
@@ -96,36 +94,28 @@ function App() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-center max-h-screen min-h-screen p-10 w-screen">
-      <h1 className='text-2xl'>Welcome to check in system!</h1>
-      <p>This app is used to check in and save your spot to an imaginary company that does not exist! <span className='italic'>Think of checking in when getting a hair cut.</span></p>
+    <div className="flex md: max-h-screen min-h-screen w-screen">
+      <aside className="border-r flex flex-col gap-5 px-10 py-5 max-h-screen min-h-screen overflow-scroll w-[400px]">
+        <h1 className='text-2xl text-center'>Welcome to check in system!</h1>
+        <p>This app is used to check in and save your spot to an imaginary company that does not exist! <span className='italic'>Think of checking in when getting a hair cut.</span></p>
 
-      <Form
-        acceptEmail={acceptEmail}
-        email={email}
-        fullName={fullName}
-        isCheckingIn={isCheckingIn}
-        handleAcceptEmail={handleAcceptEmail}
-        handleCheckIn={handleCheckIn}
-        handleSetEmail={handleSetEmail}
-        handleSetFullName={handleSetFullName}
-        handleSetPhoneNumber={handleSetPhoneNumber}
-        phoneNumber={phoneNumber}
-      />
+        <GuestList guests={guests} />
+      </aside>
 
-      {guests.length === 0 && (
-        <p>There are no appointments scheduled at this time.</p>
-      )}
-
-      {guests.length > 0 && (
-        <>
-          <p>Appointments scheduled for today.</p>
-
-          <div className='flex flex-col gap-3 overflow-scroll w-[300px]'>
-            <GuestList guests={guests} />
-          </div>
-        </>
-      )}
+      <div className="flex-1 flex items-center justify-center">
+        <Form
+          acceptEmail={acceptEmail}
+          email={email}
+          fullName={fullName}
+          isCheckingIn={isCheckingIn}
+          handleAcceptEmail={handleAcceptEmail}
+          handleCheckIn={handleCheckIn}
+          handleSetEmail={handleSetEmail}
+          handleSetFullName={handleSetFullName}
+          handleSetPhoneNumber={handleSetPhoneNumber}
+          phoneNumber={phoneNumber}
+        />
+      </div>
     </div>
   )
 }
